@@ -20,10 +20,9 @@ Functions needed:
 - keep_score()
 --------------------------------------------------------------------------------------
 Rules and Scoring:
-- Scoring: 1 note = 1 point
-- Add all of them at the end
-	+ If score < X --> lose
-	+ otherwise --> win
+- The game ends when:
+(1): the play didn't get the note in time.
+(2): the player makes more mistakes than allowed.
 
 --------------------------------------------------------------------------------------
 PSEUDOCODE:
@@ -42,13 +41,13 @@ state 2: Game on
 start TimerA2 --> 3-2-1 countdown (display)
 
 for loop(i < # notes) {
-Display note 1 (Buzzer and LED)
-Button checking (interrupt)
-Player input (interrupt)
-Check input: 
+Display note 1 (Buzzer and LED) (Using interrupts)
+Button checking (polling)
+Player input (polling)
+Check input
 Display input (display on LCD, buzzer, led)
 
-Display note 2 until the last note }
+Repeat until the song ends.}
 state = 3;
 
 state 3: Game Over
@@ -89,8 +88,9 @@ ISR {
 //setup
 //display 1 note logic
 	if (current_note < TOTAL_NOTE) {
-		note_duration(song[current_note].duration);
-		buzzer_on(song[current_note].pitch);
+		buzzer_on(song[current_note].pitch); //Turn buzzer on 
+		note_duration(song[current_note].duration); //let it play for a bit
+		buzzerOff(); //Turn buzzer off
 		current_note ++;
 	}
 //disable stuff

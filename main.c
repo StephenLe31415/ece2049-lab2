@@ -1,7 +1,9 @@
 #include <stdlib.h>
 #include <msp430.h>
 #include "peripherals.h"
+#include "functions.h"
 #define ARRAY_LEN 32
+
 //Testing laptop commit
 typedef enum{
   INIT,

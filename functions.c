@@ -78,9 +78,6 @@ A octave = 36
   TB0CTL  &= ~TBIE;                       // Explicitly Disable timer interrupts for safety
 
   // Now configure the timer period, which controls the PWM period
-  // Doing this with a hard coded values is NOT the best method
-  // We do it here only as an example. You will fix this in Lab 2.
-  //
   TB0CCR0 = ticks;                    // Set the PWM period in ACLK ticks
   TB0CCTL0 &= ~CCIE;                  // Disable timer interrupts
 
@@ -88,4 +85,10 @@ A octave = 36
   TB0CCTL5  = OUTMOD_7;                   // Set/reset mode for PWM
   TB0CCTL5 &= ~CCIE;                      // Disable capture/compare interrupts
   TB0CCR5   = TB0CCR0/2;                  // Configure a 50% duty cycle
+}
+
+void note_duration(int duration) {
+	TA2CTL1 = TASSEL1 + ID_0 + MC_1;
+	TA2CCRO = duration - 1; //assume that we already converted seconds to ticks
+	TA2CCTL0 = CCIE;
 }
